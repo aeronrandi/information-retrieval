@@ -51,8 +51,8 @@ if (strlen($filteredarray) >=4)
 $hasil=$st->doStemming($filteredarray);
 $hasil2= Enhanced_CS($filteredarray);
 //$st->doStemming($filteredarray)
-	 //  echo " ".$hasil.'<br>';
- $query = "INSERT INTO dokumen (nama_file, token, tokenstem)
+	// echo " ".$hasil.'<br>';
+ $query = "INSERT INTO dokumen (nama_file, token, tokenstem,tokenstem2)
             VALUES('$nama_file', '$filteredarray', '$hasil','$hasil2')";
          echo ">>".$query;   
   mysqli_query($konek, $query);	   
