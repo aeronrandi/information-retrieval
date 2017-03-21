@@ -1,25 +1,19 @@
 <?php		
-require_once('connect.php');//Koneksi ke database			
-function cekKamus($kata){
-	// cari di database	
-	$sql = "SELECT * from tb_katadasar where katadasar ='$kata' LIMIT 1";
-	//echo $sql.'<br/>';
-	$result = mysql_query($sql) or die(mysql_error());  
-	if(mysql_num_rows($result)==1){
-		return true; // True jika ada
-	}else{
-		return false; // jika tidak ada FALSE
-	}
+require_once('connect.php');//Koneksi ke database            
+function cekKamus($kata)
+{
+    // cari di database    
+  
 }
 
 // Hapus Inflection Suffixes (“-lah”, “-kah”, “-ku”, “-mu”, atau “-nya”)
 function Del_Inflection_Suffixes($kata){ 
 	$kataAsal = $kata;
-	if(eregi('([km]u|nya|[kl]ah|pun)$',$kata)){ // Cek Inflection Suffixes
-		$__kata = eregi_replace('([km]u|nya|[kl]ah|pun)$','',$kata);
-		if(eregi('([klt]ah|pun)$',$kata)){ // Jika berupa particles (“-lah”, “-kah”, “-tah” atau “-pun”)
-			if(eregi('([km]u|nya)$',$__kata)){ // Hapus Possesive Pronouns (“-ku”, “-mu”, atau “-nya”)
-				$__kata__ = eregi_replace('([km]u|nya)$','',$__kata);
+	if(preg_match('/^([km]u|nya|[kl]ah|pun)$/',$kata)){ // Cek Inflection Suffixes
+		$__kata = preg_replace('/([km]u|nya|[kl]ah|pun)$/','',$kata);
+		if(preg_match('/([klt]ah|pun)$/',$kata)){ // Jika berupa particles (“-lah”, “-kah”, “-tah” atau “-pun”)
+			if(preg_match('/([km]u|nya)$/',$__kata)){ // Hapus Possesive Pronouns (“-ku”, “-mu”, atau “-nya”)
+				$__kata__ = preg_replace('/([km]u|nya)$/','',$__kata);
 				return $__kata__;
 			}
 		}
@@ -29,10 +23,10 @@ function Del_Inflection_Suffixes($kata){
 }
 
 function Cek_Rule_Precedence($kata){
-	if(eregi('^(be)[[:alpha:]]+(lah|an)$',$kata)){ // be- dan -i
+	if(preg_match('/^(be)[[:alpha:]]+(lah|an)$/',$kata)){ // be- dan -i
 		return true;
 	}
-	if(eregi('^(di|([mpt]e))[[:alpha:]]+(i)$',$kata)){ // di- dan -an				
+	if(preg_match('/^(di|([mpt]e))[[:alpha:]]+(i)$/',$kata)){ // di- dan -an				
 		return true;	
 	}
 	return false;
@@ -40,25 +34,24 @@ function Cek_Rule_Precedence($kata){
 
 // Cek Prefix Disallowed Sufixes (Kombinasi Awalan dan Akhiran yang tidak diizinkan)
 function Cek_Prefix_Disallowed_Sufixes($kata){
-	if(eregi('^(be)[[:alpha:]]+(i)$',$kata)){ // be- dan -i
+	if(preg_match('/^(be)[[:alpha:]]+(i)$/',$kata)){ // be- dan -i
 		return true;
 	}
-	if(eregi('^(di)[[:alpha:]]+(an)$',$kata)){ // di- dan -an				
+	if(preg_match('/^(di)[[:alpha:]]+(an)$/',$kata)){ // di- dan -an				
 		return true;
 		
 	}
-	if(eregi('^(ke)[[:alpha:]]+(i|kan)$',$kata)){ // ke- dan -i,-kan
+	if(preg_match('/^(ke)[[:alpha:]]+(i|kan)$/',$kata)){ // ke- dan -i,-kan
 		return true;
 	}
-	if(eregi('^(me)[[:alpha:]]+(an)$',$kata)){ // me- dan -an
+	if(preg_match('/^(me)[[:alpha:]]+(an)$/',$kata)){ // me- dan -an
 		return true;
 	}
-	if(eregi('^(se)[[:alpha:]]+(i|kan)$',$kata)){ // se- dan -i,-kan
+	if(preg_match('/^(se)[[:alpha:]]+(i|kan)$/',$kata)){ // se- dan -i,-kan
 		return true;
 	}
 	return false;
 }
-
 // Hapus Derivation Suffixes (“-i”, “-an” atau “-kan”)
 function Del_Derivation_Suffixes($kata){
 	$kataAsal = $kata;

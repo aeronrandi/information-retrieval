@@ -4,7 +4,7 @@ include_once('Enhanced_CS.php');
 <!DOCTYPE html>
 <html>
 <head>
-	<title>STEMMING</title>
+	<title>Stemming</title>
 </head>
 <body align=center>
 <h3 >PENCARIAN KATA DASAR</h3>

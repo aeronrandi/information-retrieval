@@ -1,10 +1,10 @@
-<?php
+ <?php
 $host='localhost';
 $user='root';
 $pass='';
 $database='dbstbi';
 
-$conn=mysql_connect($host,$user,$pass);
-mysql_select_db($database);
+$conn=($GLOBALS["___mysqli_ston"] = mysqli_connect($host, $user, $pass));
+mysqli_select_db($GLOBALS["___mysqli_ston"], $database);
 
-?>
+?> 

@@ -1,8 +1,15 @@
+<html>
+<head>
+	<title>Hasil_Upload</title>
+</head>
+</html>
+ 
  <?php
 // Baca lokasi file sementar dan nama file dari form (fupload)
 include('class.pdf2text.php');
 include_once 'IDNstemmer.php';
 include('Enhanced_CS.php');
+include 'connect.php';
 function preproses($teks,$nama_file) { 
   //bersihkan tanda baca, ganti dengan space 
 $teks = str_replace("'", " ", $teks);
@@ -38,10 +45,8 @@ $myArray = explode(" ", $teks); //proses tokenisasi
 
 $filteredarray = array_diff($myArray, $astoplist); //remove stopword
 $st = new IDNstemmer();
-$konek = mysqli_connect("localhost","root","","dbstbi");
 
  
-
 foreach($filteredarray as $filteredarray){
    // echo $filteredarray.'<br>';  
 //echo " ".
@@ -54,8 +59,7 @@ $hasil2= Enhanced_CS($filteredarray);
 	// echo " ".$hasil.'<br>';
  $query = "INSERT INTO dokumen (nama_file, token, tokenstem,tokenstem2)
             VALUES('$nama_file', '$filteredarray', '$hasil','$hasil2')";
-         echo ">>".$query;   
-  mysqli_query($konek, $query);	   
+         echo ">>".$query;      
 	   
 	  }
 	  
@@ -76,12 +80,10 @@ if (move_uploaded_file($lokasi_file,"$folder")){
   echo "Nama File : <b>$nama_file</b> sukses di upload";
   
   // Masukkan informasi file ke database
-  $konek = mysqli_connect("localhost","root","","dbstbi");
 
   $query = "INSERT INTO upload (nama_file, deskripsi, tgl_upload)
             VALUES('$nama_file', '$_POST[deskripsi]', '$tgl_upload')";
             
-  mysqli_query($konek, $query);
   
   $tekspdf = new PDF2Text();
   
