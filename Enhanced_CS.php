@@ -3,7 +3,17 @@ require_once('connect.php');//Koneksi ke database
 function cekKamus($kata)
 {
     // cari di database    
-  
+    $sql = "SELECT * from tb_katadasar where katadasar ='$kata' LIMIT 1";
+    //echo $sql.'<br/>';
+    $result = mysqli_query($GLOBALS["___mysqli_ston"], $sql) or die(mysqli_error($GLOBALS["___mysqli_ston"]));  
+    if(mysqli_num_rows($result)==1)
+    {
+        return true; // True jika ada
+    }
+    else
+    {
+        return false; // jika tidak ada FALSE
+    }
 }
 
 // Hapus Inflection Suffixes (“-lah”, “-kah”, “-ku”, “-mu”, atau “-nya”)

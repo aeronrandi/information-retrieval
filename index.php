@@ -1,25 +1,17 @@
-<?php
-include_once('Enhanced_CS.php');
-?>
-<!DOCTYPE html>
+<? include 'connect.php'; ?>
 <html>
-<head>
-	<title>Stemming</title>
-</head>
-<body align=center>
-<h3 >PENCARIAN KATA DASAR</h3>
-<form align=center method="post" action="">
-<input type="text" name="kata" id="kata" size="20" value="<?php if(isset($_POST['kata'])){ echo $_POST['kata']; }else{ echo '';}?>">
-<input class="btnForm" type="submit" name="submit" value="Submit"/>
-</form>
-<?php
-
-if(isset($_POST['kata'])){
-	$teksAsli = $_POST['kata'];
-	echo "Teks asli : ".$teksAsli.'<br/>';
-	$stemming = Enhanced_CS($teksAsli);
-	echo "Kata dasar : ".$stemming.'<br/>';
-}
-?>
-</body>
+    <head>
+        <title>UNISBANK</title>
+    </head>
+    
+    <body>
+        <h2 align=center>STBI - UNISBANK SEMARANG</h2>
+        <hr>
+        <div align=center>
+        | <a href="upload.php">Upload undang-undang PDF</a> |
+        <a href="Stemming.php">Pencarian Kata Dasar</a> |
+        <a href="query.php">Pencarian Query</a> |
+        </div>
+        <hr />
+    </body>
 </html>

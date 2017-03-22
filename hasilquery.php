@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 } 
 $hasil=$_POST['katakunci'];
 //$sql = "SELECT distinct nama_file,token,tokenstem FROM `dokumen` where token like '%$hasil%'";
-$sql = "SELECT distinct nama_file,token,tokenstem FROM `dokumen` WHERE MATCH (token,tokenstem) AGAINST ('$hasil' IN BOOLEAN MODE)";
+$sql = "SELECT distinct token FROM `dokumen` WHERE MATCH (token,tokenstem) AGAINST ('$hasil' IN BOOLEAN MODE)";
 
 
 echo $sql;
