@@ -8,7 +8,7 @@ function cekKamus($kata)
     $result = mysqli_query($GLOBALS["___mysqli_ston"], $sql) or die(mysqli_error($GLOBALS["___mysqli_ston"]));  
     if(mysqli_num_rows($result)==1)
     {
-        return true; // True jika ada
+        return true; // True jika adao
     }
     else
     {

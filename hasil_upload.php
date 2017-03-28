@@ -2,8 +2,9 @@
 <head>
 	<title>Hasil_Upload</title>
 </head>
-
-<?php
+</html>
+ 
+ <?php
 // Baca lokasi file sementar dan nama file dari form (fupload)
 include 'class.pdf2text.php';
 include 'IDNstemmer.php';
@@ -39,7 +40,7 @@ $myArray = explode(" ", $teks);
 //remove stopword
 $filteredarray = array_diff($myArray, $astoplist); 
 $st = new IDNstemmer();
-$konek = mysqli_connect("mysql.idhostinger.com","u182305923_stbi","lutfiant0","u182305923_stbi");
+$konek = mysqli_connect("localhost","root","","dbstbi");
  
 foreach($filteredarray as $filteredarray){
   
@@ -48,7 +49,8 @@ if (strlen($filteredarray) >=4)
 
 $hasil=$st->doStemming($filteredarray);
 $hasil2= Enhanced_CS($filteredarray);
-
+	echo " ".$hasil.'<br>';
+	echo " ".$hasil2.'<br>';
  $query = "INSERT INTO dokumen (nama_file, token, tokenstem,tokenstem2)
             VALUES('$nama_file', '$filteredarray', '$hasil','$hasil2')";
          echo ">>".$query;   
@@ -73,7 +75,7 @@ if (move_uploaded_file($lokasi_file,"$folder")){
   echo "Nama File : <b>$nama_file</b> sukses di upload";
   
   // Masukkan informasi file ke database
-   $konek = mysqli_connect("mysql.idhostinger.com","u182305923_stbi","lutfiant0","u182305923_stbi");
+   $konek = mysqli_connect("localhost","root","","dbstbi");
  	
   $query = "INSERT INTO upload (nama_file, deskripsi, tgl_upload)
             VALUES('$nama_file', '$_POST[deskripsi]', '$tgl_upload')";
@@ -90,10 +92,10 @@ if (move_uploaded_file($lokasi_file,"$folder")){
   echo "bisa";
   
 $tekspdf->decodePDF();
-//echo $tekspdf->output(); 
+echo $tekspdf->output(); 
  preproses($tekspdf->output(),$nama_file);
   
-//-------------------------------------------------------------------------- 
+//------------------------------------------------------------------------- 
 //-------------------------------------------------------------------------
 
 
@@ -106,9 +108,8 @@ else{
   echo "File gagal di upload";
 }
 ?>
-<body>
+<html>
 <form action="index.php" method="get">
 <input class="btnForm" type="submit" name="submit" value="Kembali"/>
 </form>
-</body>
 </html>

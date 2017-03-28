@@ -2,7 +2,7 @@
 // Tentukan folder file yang boleh di download
 $folder = "files/";
 // Lalu cek menggunakan fungsi file_exist
-if (!file_exists($folder.$_GET['file'])) {
+if (!file_exists($folder.$_GET['files'])) {
   echo "<h1>Access forbidden!</h1>
       <p> Anda tidak diperbolehkan mendownload file ini.</p>";
   exit;
@@ -12,9 +12,9 @@ if (!file_exists($folder.$_GET['file'])) {
 else {
   header("Content-Type: octet/stream");
   header("Content-Disposition: attachment; 
-  filename=\"".$_GET['file']."\"");
-  $fp = fopen($folder.$_GET['file'], "r");
-  $data = fread($fp, filesize($folder.$_GET['file']));
+  filename=\"".$_GET['files']."\"");
+  $fp = fopen($folder.$_GET['files'], "r");
+  $data = fread($fp, filesize($folder.$_GET['files']));
   fclose($fp);
   print $data;
 }
